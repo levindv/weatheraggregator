@@ -1,6 +1,7 @@
 ﻿using DryIoc;
 using WA.API.WCF;
 using WA.Common.API;
+using WA.Common.ApiClient;
 using WA.Common.DataLayer;
 using WA.Common.Visual;
 using WA.Common.WeatherGrabber;
@@ -20,7 +21,7 @@ namespace WA.IOC
 
         private static Container GetContainer()
         {
-            return _container ?? (_container = new Container());
+            return _container ?? (_container = new Container(rules => rules.WithoutThrowOnRegisteringDisposableTransient()));
         }
 
         static Ioc()
@@ -30,6 +31,7 @@ namespace WA.IOC
             cntr.Register<IApi, WcfApi>();
             cntr.Register<IStorage, WeatherStorage>();
             cntr.Register<IGrabber, WA.Grabber.PhantomJS.Grabber>();
+            cntr.Register<IApiClient, WcfClient.WcfClient>();
         }
     }
 }

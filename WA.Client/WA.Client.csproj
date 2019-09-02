@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -106,6 +107,13 @@
       <Project>{405BF661-D3C5-4EE0-92AD-67CDFCF34649}</Project>
       <Name>WA.IOC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WA.WcfClient\WA.WcfClient.csproj">
+      <Project>{46ae364a-8fc4-4a82-a021-9e526f67c375}</Project>
+      <Name>WA.WcfClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

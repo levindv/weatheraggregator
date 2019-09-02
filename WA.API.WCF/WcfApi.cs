@@ -18,6 +18,10 @@ namespace WA.API.WCF
             //config.EnableProtocol(new BasicHttpBinding());
             //// add an extra BasicHttpBinding endpoint at http:///basic   
             //config.AddServiceEndpoint(typeof(IWcfService), new BasicHttpBinding(), "basic");
+            // concurrencyMode
+            var behavior = config.Description.Behaviors.Find<ServiceBehaviorAttribute>();
+            behavior.ConcurrencyMode = ConcurrencyMode.Multiple;
+            behavior.UseSynchronizationContext = false;
 
             config.Open();
         }

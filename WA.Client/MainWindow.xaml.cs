@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using System.Windows.Forms.Integration;
 using System.Windows.Input;
+using WA.Common.ApiClient;
 using WA.Common.Visual;
 using WA.IOC;
 
@@ -15,12 +17,23 @@ namespace WA.Client
 
         private readonly UIElement _weatherControl;
         private readonly IWpfCompatible _wcInterface;
+        private readonly IApiClient _apiClient;
 
         public MainWindow()
         {
+            var host = ConfigurationManager.AppSettings["host"];
+            if (!int.TryParse(ConfigurationManager.AppSettings["port"], out int port) || string.IsNullOrEmpty(host))
+            {
+                MessageBox.Show("Invalid Config");
+                Application.Current.Shutdown();
+                return;
+            }
+
             InitializeComponent();
 
-            MainVM = new MainVM();
+            _apiClient = Ioc.Resolve<IApiClient>();
+            _apiClient.Open(host, port);
+            MainVM = new MainVM(_apiClient);
 
             var wc = Ioc.Resolve<IVisual>().GetVisualComponent();
             _wcInterface = wc;
@@ -46,7 +59,7 @@ namespace WA.Client
 
         private void StartSearch()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 var searchResult = MainVM.Search();
                 _wcInterface.ShowWeather(searchResult);
@@ -56,6 +69,11 @@ namespace WA.Client
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             StartSearch();
+        }
+
+        ~MainWindow()
+        {
+            _apiClient.Dispose();
         }
     }
 }
