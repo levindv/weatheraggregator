@@ -65,10 +65,11 @@
     <None Include="Connected Services\WcfServiceReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WcfServiceReference\WA.WcfClient.WcfServiceReference.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Connected Services\WcfServiceReference\item3.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WcfServiceReference\WcfService.wsdl" />
+    <None Include="Properties\DataSources\WA.Common.WeatherGrabber.WeatherInfo.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\WcfServiceReference\" />

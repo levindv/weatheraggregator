@@ -9,7 +9,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -23,10 +25,11 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="56f2fbec-197c-4343-bf92-d6168c65766d" SourceId="1" SourceUrl="http://localhost:4856/?xsd=xsd1" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="f173783b-542d-44f2-9a62-1333c0201280" SourceId="1" SourceUrl="http://localhost:4856/?xsd=xsd0" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="bf1b1cdd-6af1-4a25-bf35-f8f26ec36043" SourceId="1" SourceUrl="http://localhost:4856/?xsd=xsd2" />
     <MetadataFile FileName="WcfService.wsdl" MetadataType="Wsdl" ID="c55cf9d7-bbb7-4b8a-bdc9-755f35fc8721" SourceId="1" SourceUrl="http://localhost:4856/?wsdl" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="f173783b-542d-44f2-9a62-1333c0201280" SourceId="1" SourceUrl="http://localhost:4856/?xsd=xsd0" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="cdeabd24-426c-42da-8d94-2ef1fb94815d" SourceId="1" SourceUrl="http://localhost:4856/?xsd=xsd3" />
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="dfd8236d-7117-4961-bd88-20c598ff4a18" SourceId="1" SourceUrl="http://localhost:4856/?disco" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="bf1b1cdd-6af1-4a25-bf35-f8f26ec36043" SourceId="1" SourceUrl="http://localhost:4856/?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

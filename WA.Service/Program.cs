@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using WA.Common.API;
+using WA.Common.DataLayer;
 using WA.IOC;
 
 namespace WA.Service
@@ -33,7 +34,8 @@ namespace WA.Service
         public static void StartService(string host, int port)
         {
             _api = Ioc.Resolve<IApi>();
-            _api.Bind(host, port);
+            var storage = Ioc.Resolve<IStorage>();
+            _api.Bind(host, port, storage);
         }
     }
 }

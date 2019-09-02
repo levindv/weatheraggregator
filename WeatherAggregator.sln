@@ -35,11 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{12ED688F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WA.Tests", "WA.Tests\WA.Tests.csproj", "{C08E9AF0-4C3E-4DF1-8A84-B76899CF6789}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{05803697-CADB-4A86-A9E1-25FA68B8F624}"
-	ProjectSection(SolutionItems) = preProject
-		TodoList.txt = TodoList.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WA.Visual.WinForms", "WA.Visual.WinForms\WA.Visual.WinForms.csproj", "{71CDED10-8E10-4C2B-B4CB-74F4D8DD736F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WA.IOC", "WA.IOC\WA.IOC.csproj", "{405BF661-D3C5-4EE0-92AD-67CDFCF34649}"

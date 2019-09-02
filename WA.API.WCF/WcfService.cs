@@ -1,31 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+using WA.Common.DataLayer;
+using WA.Common.WeatherGrabber;
 
 namespace WA.API.WCF
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class WcfService : IWcfService
     {
-        public string GetData(int value)
+        private readonly IStorage _storage;
+
+        public WcfService(IStorage storage)
         {
-            return string.Format("You entered: {0}", value);
+            _storage = storage;
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public List<string> GetAvailableCitiesForTomorrow(DateTime today)
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            return _storage.GetCitiesForTomorrow(today).Select(c => c.Name).ToList();
+        }
+
+        public WeatherInfo GetWeatherInfo(string cityName)
+        {
+            return _storage.GetWeatherForTomorowByCityName(cityName);
         }
     }
 }

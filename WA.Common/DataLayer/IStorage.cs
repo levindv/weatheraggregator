@@ -22,6 +22,6 @@ namespace WA.Common.DataLayer
         /// Получить список городов с доступной погодой на завтра
         /// </summary>
         /// <returns></returns>
-        List<CityInfo> GetCitiesForTomorrow();
+        List<CityInfo> GetCitiesForTomorrow(DateTime today);
     }
 }

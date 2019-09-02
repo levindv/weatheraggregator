@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WA.Common.WeatherGrabber
+﻿namespace WA.Common.WeatherGrabber
 {
-    public interface CityInfo
+    public class CityInfo
     {
-        string Name { get; set; }
-        string Url { get; set; }
-        string CityId { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string CityId { get; set; }
+
+        public static implicit operator CityInfo(string cityName)
+        {
+            return new CityInfo() { Name = cityName };
+        }
     }
 }

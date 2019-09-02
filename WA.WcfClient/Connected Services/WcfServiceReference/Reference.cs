@@ -9,86 +9,23 @@
 //------------------------------------------------------------------------------
 
 namespace WA.WcfClient.WcfServiceReference {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/WA.API.WCF")]
-    [System.SerializableAttribute()]
-    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BoolValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StringValueField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
-            get {
-                return this.BoolValueField;
-            }
-            set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
-            get {
-                return this.StringValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WcfServiceReference.IWcfService")]
     public interface IWcfService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetData", ReplyAction="http://tempuri.org/IWcfService/GetDataResponse")]
-        string GetData(int value);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetAvailableCitiesForTomorrow", ReplyAction="http://tempuri.org/IWcfService/GetAvailableCitiesForTomorrowResponse")]
+        System.Collections.Generic.List<string> GetAvailableCitiesForTomorrow(System.DateTime today);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetData", ReplyAction="http://tempuri.org/IWcfService/GetDataResponse")]
-        System.Threading.Tasks.Task<string> GetDataAsync(int value);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetAvailableCitiesForTomorrow", ReplyAction="http://tempuri.org/IWcfService/GetAvailableCitiesForTomorrowResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetAvailableCitiesForTomorrowAsync(System.DateTime today);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IWcfService/GetDataUsingDataContractResponse")]
-        WA.WcfClient.WcfServiceReference.CompositeType GetDataUsingDataContract(WA.WcfClient.WcfServiceReference.CompositeType composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetWeatherInfo", ReplyAction="http://tempuri.org/IWcfService/GetWeatherInfoResponse")]
+        WA.Common.WeatherGrabber.WeatherInfo GetWeatherInfo(string cityName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IWcfService/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<WA.WcfClient.WcfServiceReference.CompositeType> GetDataUsingDataContractAsync(WA.WcfClient.WcfServiceReference.CompositeType composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetWeatherInfo", ReplyAction="http://tempuri.org/IWcfService/GetWeatherInfoResponse")]
+        System.Threading.Tasks.Task<WA.Common.WeatherGrabber.WeatherInfo> GetWeatherInfoAsync(string cityName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -118,20 +55,20 @@ namespace WA.WcfClient.WcfServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
+        public System.Collections.Generic.List<string> GetAvailableCitiesForTomorrow(System.DateTime today) {
+            return base.Channel.GetAvailableCitiesForTomorrow(today);
         }
         
-        public System.Threading.Tasks.Task<string> GetDataAsync(int value) {
-            return base.Channel.GetDataAsync(value);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetAvailableCitiesForTomorrowAsync(System.DateTime today) {
+            return base.Channel.GetAvailableCitiesForTomorrowAsync(today);
         }
         
-        public WA.WcfClient.WcfServiceReference.CompositeType GetDataUsingDataContract(WA.WcfClient.WcfServiceReference.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
+        public WA.Common.WeatherGrabber.WeatherInfo GetWeatherInfo(string cityName) {
+            return base.Channel.GetWeatherInfo(cityName);
         }
         
-        public System.Threading.Tasks.Task<WA.WcfClient.WcfServiceReference.CompositeType> GetDataUsingDataContractAsync(WA.WcfClient.WcfServiceReference.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContractAsync(composite);
+        public System.Threading.Tasks.Task<WA.Common.WeatherGrabber.WeatherInfo> GetWeatherInfoAsync(string cityName) {
+            return base.Channel.GetWeatherInfoAsync(cityName);
         }
     }
 }

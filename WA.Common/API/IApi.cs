@@ -1,4 +1,6 @@
-﻿namespace WA.Common.API
+﻿using WA.Common.DataLayer;
+
+namespace WA.Common.API
 {
     public interface IApi
     {
@@ -7,7 +9,8 @@
         /// </summary>
         /// <param name="host">хост апи</param>
         /// <param name="port">порт апи</param>
-        void Bind(string host, int port);
+        /// <param name="storage">хранилище с погодой</param>
+        void Bind(string host, int port, IStorage storage);
         /// <summary>
         /// Свернуть апи
         /// </summary>
