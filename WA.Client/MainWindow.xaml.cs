@@ -16,7 +16,7 @@ namespace WA.Client
         public MainVM MainVM { get; }
 
         private readonly UIElement _weatherControl;
-        private readonly IWpfCompatible _wcInterface;
+        private readonly IVisualComponent _wcInterface;
         private readonly IApiClient _apiClient;
 
         public MainWindow()

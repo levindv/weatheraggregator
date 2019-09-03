@@ -5,7 +5,7 @@ using WA.Common.WeatherGrabber;
 
 namespace WA.Visual.WinForms
 {
-    public partial class WeatherPreviewControl: UserControl, IWpfCompatible
+    public partial class WeatherPreviewControl: UserControl, IVisualComponent
     {
         public bool IsWpfCompatible => false;
 

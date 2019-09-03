@@ -2,7 +2,7 @@
 
 namespace WA.Common.Visual
 {
-    public interface IWpfCompatible
+    public interface IVisualComponent
     {
         bool IsWpfCompatible { get; }
         object Control { get; }

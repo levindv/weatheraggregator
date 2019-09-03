@@ -8,6 +8,6 @@ namespace WA.Common.Visual
         /// Получить контрол для отрисовки
         /// </summary>
         /// <returns></returns>
-        IWpfCompatible GetVisualComponent();
+        IVisualComponent GetVisualComponent();
     }
 }
