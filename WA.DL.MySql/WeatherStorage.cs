@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WA.Common.DataLayer;
 using WA.Common.WeatherGrabber;
 
@@ -21,17 +22,17 @@ namespace WA.DL.MySql
                 CurrDate = DateTime.Today,
                 DetailedWeather = new DetailedWeather()
                 {
-                    WeatherByHours = new SortedDictionary<double, HourDetails>()
+                    WeatherByHours = new SortedDictionary<TimeSpan, HourDetails>(new List<HourDetails>()
                     {
-                        { 00, new HourDetails() { Humidity = 0.1, Temperature = -1, Time = TimeSpan.FromHours(00), WindText = "1-2", IconSvg = _svg } },
-                        { 03, new HourDetails() { Humidity = 0.2, Temperature = +6, Time = TimeSpan.FromHours(03), WindText = "3-4", IconSvg = _svg } },
-                        { 06, new HourDetails() { Humidity = 0.3, Temperature = +5, Time = TimeSpan.FromHours(06), WindText = "5",   IconSvg = _svg } },
-                        { 09, new HourDetails() { Humidity = 0.4, Temperature = +4, Time = TimeSpan.FromHours(09), WindText = "6",   IconSvg = _svg } },
-                        { 12, new HourDetails() { Humidity = 0.5, Temperature = +3, Time = TimeSpan.FromHours(12), WindText = "7-8", IconSvg = _svg } },
-                        { 15, new HourDetails() { Humidity = 0.6, Temperature = +2, Time = TimeSpan.FromHours(15), WindText = "9",   IconSvg = _svg } },
-                        { 18, new HourDetails() { Humidity = 0.7, Temperature = +1, Time = TimeSpan.FromHours(18), WindText = "10",  IconSvg = _svg } },
-                        { 21, new HourDetails() { Humidity = 0.8, Temperature =  0, Time = TimeSpan.FromHours(21), WindText = "112", IconSvg = _svg } },
-                    },
+                        new HourDetails() { Humidity = 0.1, Temperature = -1, Time = TimeSpan.FromHours(00), WindText = "1-2", IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.2, Temperature = +6, Time = TimeSpan.FromHours(03), WindText = "3-4", IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.3, Temperature = +5, Time = TimeSpan.FromHours(06), WindText = "5",   IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.4, Temperature = +4, Time = TimeSpan.FromHours(09), WindText = "6",   IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.5, Temperature = +3, Time = TimeSpan.FromHours(12), WindText = "7-8", IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.6, Temperature = +2, Time = TimeSpan.FromHours(15), WindText = "9",   IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.7, Temperature = +1, Time = TimeSpan.FromHours(18), WindText = "10",  IconSvg = _svg },
+                        new HourDetails() { Humidity = 0.8, Temperature = 0, Time = TimeSpan.FromHours(21), WindText = "112",  IconSvg = _svg },
+                    }.ToDictionary(d => d.Time)),
                 },
             };
         }
@@ -41,7 +42,7 @@ namespace WA.DL.MySql
         public void SetCityWeather(CityInfo city, DateTime date, WeatherInfo weather)
         {
             // todo: вызывать нормальный метод
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

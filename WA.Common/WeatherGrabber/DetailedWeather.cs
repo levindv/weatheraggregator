@@ -5,7 +5,7 @@ namespace WA.Common.WeatherGrabber
 {
     public class DetailedWeather
     {
-        public SortedDictionary<double, HourDetails> WeatherByHours { get; set; }
+        public SortedDictionary<TimeSpan, HourDetails> WeatherByHours { get; set; }
     }
 
     public class HourDetails

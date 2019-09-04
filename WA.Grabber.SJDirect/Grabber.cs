@@ -11,7 +11,7 @@ namespace WA.Grabber.SJDirect
             throw new NotImplementedException();
         }
 
-        public WeatherInfo GetOneWeatherInfo(CityInfo city, DateTime date)
+        public List<WeatherInfo> GetWeatherInfoList(CityInfo city)
         {
             throw new NotImplementedException();
         }
