@@ -12,6 +12,6 @@ namespace WA.API.WCF
         List<string> GetAvailableCitiesForTomorrow(DateTime today);
 
         [OperationContract]
-        WeatherInfo GetWeatherInfo(string cityName);
+        WeatherInfo GetWeatherInfo(string cityName, DateTime today);
     }
 }

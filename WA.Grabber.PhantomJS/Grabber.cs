@@ -33,7 +33,7 @@ namespace WA.Grabber.PhantomJS
                         if (!string.IsNullOrWhiteSpace(city_url))
                         {
                             var city_name = city_div.GetInnerElementText("span", "class", "cities_name");
-                            result.Add(new CityInfo() { Name = city_name, Url = city_url, CityId = ExtractFromUrl(city_url) });
+                            result.Add(new CityInfo() { Name = city_name, Url = city_url, OuterId = ExtractFromUrl(city_url) });
                         }
                     }
                 }

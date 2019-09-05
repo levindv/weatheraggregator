@@ -20,9 +20,9 @@ namespace WA.API.WCF
             return _storage.GetCitiesForTomorrow(today).Select(c => c.Name).ToList();
         }
 
-        public WeatherInfo GetWeatherInfo(string cityName)
+        public WeatherInfo GetWeatherInfo(string cityName, DateTime today)
         {
-            return _storage.GetWeatherForTomorowByCityName(cityName);
+            return _storage.GetWeatherForTomorowByCityName(cityName, today);
         }
     }
 }

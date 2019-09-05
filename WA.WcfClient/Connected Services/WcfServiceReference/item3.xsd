@@ -11,17 +11,17 @@
   <xs:element name="WeatherInfo" nillable="true" type="tns:WeatherInfo" />
   <xs:complexType name="DetailedWeather">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="WeatherByHours" nillable="true" type="q1:ArrayOfKeyValueOfdoubleHourDetails8rmPITtp" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="WeatherByHours" nillable="true" type="q1:ArrayOfKeyValueOfdurationHourDetails2KVC9pno" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DetailedWeather" nillable="true" type="tns:DetailedWeather" />
   <xs:complexType name="HourDetails">
     <xs:sequence>
       <xs:element minOccurs="0" name="Humidity" type="xs:double" />
+      <xs:element minOccurs="0" name="IconSvg" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Temperature" type="xs:double" />
       <xs:element minOccurs="0" name="Time" type="ser:duration" />
-      <xs:element minOccurs="0" name="WindHigh" type="xs:double" />
-      <xs:element minOccurs="0" name="WindLow" type="xs:double" />
+      <xs:element minOccurs="0" name="WindText" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="HourDetails" nillable="true" type="tns:HourDetails" />

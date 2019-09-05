@@ -17,7 +17,7 @@ namespace WA.Common.DataLayer
         /// </summary>
         /// <param name="cityName"></param>
         /// <returns></returns>
-        WeatherInfo GetWeatherForTomorowByCityName(string cityName);
+        WeatherInfo GetWeatherForTomorowByCityName(string cityName, DateTime today);
         /// <summary>
         /// Получить список городов с доступной погодой на завтра
         /// </summary>

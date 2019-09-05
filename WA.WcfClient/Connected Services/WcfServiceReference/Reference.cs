@@ -22,10 +22,10 @@ namespace WA.WcfClient.WcfServiceReference {
         System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetAvailableCitiesForTomorrowAsync(System.DateTime today);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetWeatherInfo", ReplyAction="http://tempuri.org/IWcfService/GetWeatherInfoResponse")]
-        WA.Common.WeatherGrabber.WeatherInfo GetWeatherInfo(string cityName);
+        WA.Common.WeatherGrabber.WeatherInfo GetWeatherInfo(string cityName, System.DateTime today);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWcfService/GetWeatherInfo", ReplyAction="http://tempuri.org/IWcfService/GetWeatherInfoResponse")]
-        System.Threading.Tasks.Task<WA.Common.WeatherGrabber.WeatherInfo> GetWeatherInfoAsync(string cityName);
+        System.Threading.Tasks.Task<WA.Common.WeatherGrabber.WeatherInfo> GetWeatherInfoAsync(string cityName, System.DateTime today);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,12 +63,12 @@ namespace WA.WcfClient.WcfServiceReference {
             return base.Channel.GetAvailableCitiesForTomorrowAsync(today);
         }
         
-        public WA.Common.WeatherGrabber.WeatherInfo GetWeatherInfo(string cityName) {
-            return base.Channel.GetWeatherInfo(cityName);
+        public WA.Common.WeatherGrabber.WeatherInfo GetWeatherInfo(string cityName, System.DateTime today) {
+            return base.Channel.GetWeatherInfo(cityName, today);
         }
         
-        public System.Threading.Tasks.Task<WA.Common.WeatherGrabber.WeatherInfo> GetWeatherInfoAsync(string cityName) {
-            return base.Channel.GetWeatherInfoAsync(cityName);
+        public System.Threading.Tasks.Task<WA.Common.WeatherGrabber.WeatherInfo> GetWeatherInfoAsync(string cityName, System.DateTime today) {
+            return base.Channel.GetWeatherInfoAsync(cityName, today);
         }
     }
 }

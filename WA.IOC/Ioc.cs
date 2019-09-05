@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using System.Configuration;
 using WA.API.WCF;
 using WA.Common.API;
 using WA.Common.ApiClient;
@@ -29,7 +30,7 @@ namespace WA.IOC
             var cntr = GetContainer();
             cntr.Register<IVisual, WpfVisual>();
             cntr.Register<IApi, WcfApi>();
-            cntr.Register<IStorage, WeatherStorage>();
+            cntr.RegisterDelegate<IStorage>((rctx) => new WeatherStorage(ConfigurationManager.ConnectionStrings["db"].ConnectionString));
             cntr.Register<IGrabber, WA.Grabber.PhantomJS.Grabber>();
             cntr.Register<IApiClient, WcfClient.WcfClient>();
         }

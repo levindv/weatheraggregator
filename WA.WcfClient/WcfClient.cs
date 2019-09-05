@@ -27,7 +27,7 @@ namespace WA.WcfClient
 
         public WeatherInfo GetWeatherInfo(string cityName)
         {
-            return client.GetWeatherInfo(cityName);
+            return client.GetWeatherInfo(cityName, DateTime.Today);
         }
 
         public void Dispose()

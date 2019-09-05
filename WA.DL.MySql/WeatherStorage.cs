@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Dapper;
+using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WA.Common.DataLayer;
@@ -8,41 +11,114 @@ namespace WA.DL.MySql
 {
     public class WeatherStorage : IStorage
     {
+        private readonly string _connString;
+
+        public WeatherStorage(string connectionString)
+        {
+            _connString = connectionString;
+        }
+
         public List<CityInfo> GetCitiesForTomorrow(DateTime today)
         {
-            // todo: вызывать нормальный метод
-            return new List<CityInfo>() { "Краснодар", "Ростов", "Уфа", "Лимассол" };
-        }
-
-        public WeatherInfo GetWeatherForTomorowByCityName(string cityName)
-        {
-            // todo: вызывать нормальный метод
-            return new WeatherInfo()
+            using (var cn = new MySqlConnection(_connString))
             {
-                CurrDate = DateTime.Today,
-                DetailedWeather = new DetailedWeather()
-                {
-                    WeatherByHours = new SortedDictionary<TimeSpan, HourDetails>(new List<HourDetails>()
-                    {
-                        new HourDetails() { Humidity = 0.1, Temperature = -1, Time = TimeSpan.FromHours(00), WindText = "1-2", IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.2, Temperature = +6, Time = TimeSpan.FromHours(03), WindText = "3-4", IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.3, Temperature = +5, Time = TimeSpan.FromHours(06), WindText = "5",   IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.4, Temperature = +4, Time = TimeSpan.FromHours(09), WindText = "6",   IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.5, Temperature = +3, Time = TimeSpan.FromHours(12), WindText = "7-8", IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.6, Temperature = +2, Time = TimeSpan.FromHours(15), WindText = "9",   IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.7, Temperature = +1, Time = TimeSpan.FromHours(18), WindText = "10",  IconSvg = _svg },
-                        new HourDetails() { Humidity = 0.8, Temperature = 0, Time = TimeSpan.FromHours(21), WindText = "112",  IconSvg = _svg },
-                    }.ToDictionary(d => d.Time)),
-                },
-            };
+                var prms = new { date = today.AddDays(1).Date };
+                return cn.Query<CityInfo>("select distinct cityname as name, cityouterid as cityid from weather where day = @date", prms).ToList();
+            }
         }
 
-        private const string _svg = @"<svg height=""36"" viewBox=""0 0 55 36"" width=""55"" xmlns=""http://www.w3.org/2000/svg""><g fill=""#7694b4"" fill-rule=""evenodd"" transform=""translate(6 1)""><path d=""m11.2 25.6 1.4 2.9 3.2.5-2.2 2.3.6 3.2-2.9-1.5-2.9 1.5.6-3.2-2.3-2.3 3.2-.5z""></path><path d=""m38.8 2.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3.9-1.8z""></path><path d=""m2.9 9 .9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z""></path><path d=""m40.5 26 .6470588 1.4235294 1.5529412.2588235-1.1647059 1.1647059.2588235 1.5529412-1.4235294-.7764706-1.2941176.6470588.2588235-1.5529411-1.1647059-1.1647059 1.5529412-.2588236z""></path><path d=""m23.1910436 0c-4.7101353 1.21606429-8.1910436 5.51234094-8.1910436 10.6257448 0 6.0586029 4.886719 10.970071 10.9147923 10.970071 3.7897193 0 7.1283338-1.9411914 9.0852077-4.8882254-.8706559.2247863-1.7833126.3443261-2.7237487.3443261-6.0280734 0-10.9147924-4.911468-10.9147924-10.9700709 0-2.24969032.6737796-4.34121396 1.8295847-6.0818456z""></path></g></svg>";
+        public WeatherInfo GetWeatherForTomorowByCityName(string cityName, DateTime today)
+        {
+            using (var cn = new MySqlConnection(_connString))
+            {
+                var prms = new { name = cityName, day = today.AddDays(1).Date };
+                var result = cn.QueryFirst<WeatherInfoInStorage>("select id, data, day from weather where cityname = @name and day = @day", prms);
+                var byHours = new SortedDictionary<TimeSpan, HourDetails>(JsonConvert.DeserializeObject<List<HourDetails>>(result.Data).ToDictionary(w => w.Time));
+                return new WeatherInfo() { CurrDate = prms.day, DetailedWeather = new DetailedWeather() { WeatherByHours = byHours } };
+            }
+        }
 
         public void SetCityWeather(CityInfo city, DateTime date, WeatherInfo weather)
         {
-            // todo: вызывать нормальный метод
-            //throw new NotImplementedException();
+            using (var cn = new MySqlConnection(_connString))
+            {
+                ActualizeCity(city, cn);
+
+                var weatherid = ActualizeWeather(city, date, weather, cn);
+
+                ActualizeWeatherByHours(weatherid, weather, cn);
+            }
+        }
+
+        private static void ActualizeCity(CityInfo city, MySqlConnection cn)
+        {
+            var cityid = cn.QueryFirstOrDefault<long?>("select id from cities where name = @name", new { name = city.Name });
+            if (cityid.HasValue)
+            {
+                cn.Execute("update cities set outerid = @oid, url = @url where id = @id", new { id = cityid.Value, url = city.Url, oid = city.OuterId });
+            }
+            else
+            {
+                cn.Execute("insert into cities (name, outerid, url) values (@name, @oid, @url)", new { name = city.Name, url = city.Url, oid = city.OuterId });
+            }
+        }
+
+        private static long ActualizeWeather(CityInfo city, DateTime date, WeatherInfo weather, MySqlConnection cn)
+        {
+            var wthrid = cn.QueryFirstOrDefault<long?>("select id from weather where cityname = @name and day = @day",
+                                                        new { name = city.Name, day = date.Date });
+            if (wthrid.HasValue)
+            {
+                cn.Execute("update weather set data = @data, day = @day, importdate = @impdt, cityouterid = @oid, cityname = @cname where id = @id",
+                    new
+                    {
+                        data = JsonConvert.SerializeObject(weather),
+                        id = wthrid.Value,
+                        day = date.Date,
+                        impdt = DateTime.UtcNow,
+                        oid = city.OuterId,
+                        cname = city.Name,
+                    });
+            }
+            else
+            {
+                wthrid = cn.QueryFirst<long>("insert into weather (data, day, importdate, cityouterid, cityname) " +
+                                             " values (@data, @day, @impdt, @oid, @cname); " +
+                                             " SELECT LAST_INSERT_ID();",
+                    new
+                    {
+                        data = JsonConvert.SerializeObject(weather),
+                        day = date.Date,
+                        impdt = DateTime.UtcNow,
+                        oid = city.OuterId,
+                        cname = city.Name,
+                    });
+            }
+            return wthrid.Value;
+        }
+
+        private static void ActualizeWeatherByHours(long weatherid, WeatherInfo weather, MySqlConnection cn)
+        {
+            MySqlTransaction tr = null;
+            try
+            {
+                cn.Open();
+                tr = cn.BeginTransaction();
+                cn.Execute("delete from weatherbyhours where weatherid = @wid;", new { wid = weatherid });
+
+                foreach (var hw in weather.DetailedWeather.WeatherByHours.Values)
+                {
+                    cn.Execute("insert into weatherbyhours (weatherid, humidity, temperature, time, wind, iconsvg) values (@wid, @hm, @tmp, @tm, @wn, @svg)",
+                        new { wid = weatherid, hm = hw.Humidity, tmp = hw.Temperature, tm = hw.Time, wn = hw.WindText, svg = hw.IconSvg});
+                }
+
+                tr.Commit();
+                cn.Close();
+            }
+            catch
+            {
+                tr?.Rollback();
+            }
         }
     }
 }

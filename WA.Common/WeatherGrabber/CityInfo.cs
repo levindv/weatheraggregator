@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
         public string Url { get; set; }
-        public string CityId { get; set; }
+        public string OuterId { get; set; }
 
         public static implicit operator CityInfo(string cityName)
         {

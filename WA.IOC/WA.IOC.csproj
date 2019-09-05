@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,7 +59,7 @@
       <Name>WA.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\WA.DL.MySql\WA.DL.MySql.csproj">
-      <Project>{162EA736-B70E-4DCE-AF3C-4532609E6C6D}</Project>
+      <Project>{51880964-CA10-4C9D-9007-330C81613388}</Project>
       <Name>WA.DL.MySql</Name>
     </ProjectReference>
     <ProjectReference Include="..\WA.Grabber.PhantomJS\WA.Grabber.PhantomJS.csproj">
