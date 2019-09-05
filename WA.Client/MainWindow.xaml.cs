@@ -35,6 +35,8 @@ namespace WA.Client
             _apiClient.Open(host, port);
             MainVM = new MainVM(_apiClient);
 
+            DataContext = MainVM;
+
             var wc = Ioc.Resolve<IVisual>().GetVisualComponent();
             _wcInterface = wc;
             if (wc.IsWpfCompatible)

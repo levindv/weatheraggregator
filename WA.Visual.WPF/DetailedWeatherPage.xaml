@@ -9,8 +9,6 @@
       Background="White">
 
     <StackPanel Visibility="{Binding DataVisibility}">
-        <TextBlock Text="Hello World!!!" VerticalAlignment="Center" HorizontalAlignment="Center" Name="HWTB" />
-        
         <ItemsControl ItemsSource="{Binding WeatherByHours}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

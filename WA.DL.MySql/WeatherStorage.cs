@@ -31,10 +31,9 @@ namespace WA.DL.MySql
         {
             using (var cn = new MySqlConnection(_connString))
             {
-                var prms = new { name = cityName, day = today.AddDays(1).Date };
-                var result = cn.QueryFirst<WeatherInfoInStorage>("select id, data, day from weather where cityname = @name and day = @day", prms);
-                var byHours = new SortedDictionary<TimeSpan, HourDetails>(JsonConvert.DeserializeObject<List<HourDetails>>(result.Data).ToDictionary(w => w.Time));
-                return new WeatherInfo() { CurrDate = prms.day, DetailedWeather = new DetailedWeather() { WeatherByHours = byHours } };
+                var result = cn.QueryFirst<WeatherInfoInStorage>("select id, data, day from weather where cityname = @name and day = @day",
+                                                                 new { name = cityName, day = today.AddDays(1).Date });
+                return JsonConvert.DeserializeObject<WeatherInfo>(result.Data);
             }
         }
 
@@ -109,7 +108,7 @@ namespace WA.DL.MySql
                 foreach (var hw in weather.DetailedWeather.WeatherByHours.Values)
                 {
                     cn.Execute("insert into weatherbyhours (weatherid, humidity, temperature, time, wind, iconsvg) values (@wid, @hm, @tmp, @tm, @wn, @svg)",
-                        new { wid = weatherid, hm = hw.Humidity, tmp = hw.Temperature, tm = hw.Time, wn = hw.WindText, svg = hw.IconSvg});
+                        new { wid = weatherid, hm = hw.Humidity, tmp = hw.Temperature, tm = hw.Time, wn = hw.WindText, svg = hw.IconSvg });
                 }
 
                 tr.Commit();

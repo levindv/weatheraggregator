@@ -27,8 +27,6 @@ namespace WA.Visual.WPF
         public void ShowWeather(WeatherInfo weather)
         {
             _detailedWeatherVM.LoadWeather(weather);
-            //todo: show weather
-            HWTB.Text += weather.CurrDate;
         }
 
         private void ContentControl_SizeChanged(object sender, SizeChangedEventArgs e)
