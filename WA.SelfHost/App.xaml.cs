@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using System.Windows;
 using WA.Client;
-using WA.Service;
 
 namespace WA.SelfHost
 {
@@ -21,7 +20,10 @@ namespace WA.SelfHost
             }
 
             // Start API
-            Program.StartService(host, port);
+            ApiService.Program.StartService(host, port);
+
+            // Start Grabber
+            Service.Program.StartService();
 
             // Start Client
             MainWindow = new MainWindow();
@@ -31,7 +33,8 @@ namespace WA.SelfHost
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Program.StopService();
+            ApiService.Program.StopService();
+            Service.Program.StopService();
             base.OnExit(e);
         }
     }
